@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "oniichat-2c310"
+  },
+  "targets": {
+    "oniichat-2c310": {
+      "hosting": {
+        "analytics": [
+          "oniichat-2c310"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
