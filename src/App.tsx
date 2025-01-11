@@ -6,6 +6,7 @@ import { MessageMetrics } from './components/MessageMetrics';
 import { GemMetrics } from './components/GemMetrics';
 import { EventMetrics } from './components/EventMetrics';
 import { ConversionMetricsTab } from './components/ConversionMetricsTab';
+import { StagePlatformBrowser } from './components/StagePlatformBrowser';
 import { 
   getAnalyticsSummary, 
   formatTimestamp, 
@@ -71,6 +72,9 @@ function App() {
       </div>
       <div className="grid grid-cols-1 gap-6 mb-6">
         <GemMetrics data={data} />
+      </div>
+      <div className="grid grid-cols-1 gap-6 mb-6">
+        <StagePlatformBrowser data={data} />
       </div>
       <div className="grid grid-cols-1 gap-6">
         <EventMetrics data={data} stage="anonymous" />

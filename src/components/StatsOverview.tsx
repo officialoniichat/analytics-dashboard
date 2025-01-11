@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, MessageSquare, Gem } from 'lucide-react';
+import { Users, MessageSquare, Gem, ShoppingCart, DollarSign } from 'lucide-react';
 import { DashboardCard } from './DashboardCard';
 import type { AnalyticsData } from '../types/analytics';
 
@@ -45,10 +45,25 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({ data }) => {
       icon: Gem,
       color: 'text-purple-600',
     },
+    {
+      title: 'Total Purchases',
+      value: (data.purchaseMetrics?.totalPurchases || 0).toLocaleString(),
+      icon: ShoppingCart,
+      color: 'text-orange-600',
+    },
+    {
+      title: 'Total Revenue',
+      value: `$${(data.purchaseMetrics?.totalRevenue || 0).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}`,
+      icon: DollarSign,
+      color: 'text-emerald-600',
+    },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-6">
       {stats.map((stat) => (
         <DashboardCard key={stat.title} title={stat.title}>
           <div className="flex items-center">

@@ -2,10 +2,47 @@ import React from 'react';
 import { DashboardCard } from './DashboardCard';
 import { 
   MessageCircle, Gem, Users, Clock, AlertTriangle,
-  TrendingUp, Activity, ArrowRight
+  TrendingUp, Activity, ArrowRight, Monitor, Globe,
+  Smartphone, Laptop
 } from 'lucide-react';
 import { EventMetrics } from './EventMetrics';
+import { PurchaseMetrics } from './PurchaseMetrics';
 import type { AnalyticsData } from '../types/analytics';
+
+const formatBrowserName = (browser: string): string => {
+  const browserNames: Record<string, string> = {
+    'Chrome': 'Google Chrome',
+    'Safari': 'Apple Safari',
+    'Firefox': 'Mozilla Firefox',
+    'Edge': 'Microsoft Edge',
+    'Opera': 'Opera Browser',
+    'Samsung': 'Samsung Internet',
+    'IE': 'Internet Explorer',
+    'unknown': 'Unknown Browser'
+  };
+  return browserNames[browser] || browser;
+};
+
+const formatPlatformName = (platform: string): string => {
+  const platformNames: Record<string, string> = {
+    'web': 'Web Browser',
+    'ios': 'iOS App',
+    'android': 'Android App'
+  };
+  return platformNames[platform] || platform;
+};
+
+const getPlatformIcon = (platform: string) => {
+  switch (platform) {
+    case 'ios':
+    case 'android':
+      return <Smartphone className="w-5 h-5 text-green-500 mr-2" />;
+    case 'web':
+      return <Laptop className="w-5 h-5 text-green-500 mr-2" />;
+    default:
+      return <Globe className="w-5 h-5 text-green-500 mr-2" />;
+  }
+};
 
 interface ConversionMetricsTabProps {
   data: AnalyticsData;
@@ -136,7 +173,73 @@ export const ConversionMetricsTab: React.FC<ConversionMetricsTabProps> = ({ data
         </div>
       </DashboardCard>
 
+      {(stage.browsers || stage.platforms) && (
+        <DashboardCard title="Platform Analytics">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {stage.browsers && (
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-900 flex items-center">
+                  <Monitor className="w-5 h-5 text-blue-500 mr-2" />
+                  Browser Distribution
+                </h3>
+                <div className="space-y-3">
+                  {Object.entries(stage.browsers)
+                    .sort(([, a], [, b]) => b - a)
+                    .map(([browser, count]) => (
+                      <div key={browser} className="flex items-center justify-between group hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-gray-700 font-medium">{formatBrowserName(browser)}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <span className="font-medium text-gray-900">
+                            {count.toLocaleString()}
+                          </span>
+                          <span className="text-sm text-gray-500 ml-2 w-16 text-right">
+                            ({((count / stage.userCount) * 100).toFixed(1)}%)
+                          </span>
+                        </div>
+                      </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {stage.platforms && (
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-900 flex items-center">
+                  <Globe className="w-5 h-5 text-green-500 mr-2" />
+                  Platform Distribution
+                </h3>
+                <div className="space-y-3">
+                  {Object.entries(stage.platforms)
+                    .sort(([, a], [, b]) => b - a)
+                    .map(([platform, count]) => (
+                      <div key={platform} className="flex items-center justify-between group hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                        <div className="flex items-center">
+                          {getPlatformIcon(platform)}
+                          <span className="text-gray-700 font-medium">{formatPlatformName(platform)}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <span className="font-medium text-gray-900">
+                            {count.toLocaleString()}
+                          </span>
+                          <span className="text-sm text-gray-500 ml-2 w-16 text-right">
+                            ({((count / stage.userCount) * 100).toFixed(1)}%)
+                          </span>
+                        </div>
+                      </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </DashboardCard>
+      )}
+
       <EventMetrics data={data} stage={eventStage} />
+
+      {type === 'signedUpToPurchased' && data.purchaseMetrics && (
+        <PurchaseMetrics metrics={data.purchaseMetrics} />
+      )}
 
       {Object.keys(stage.errors || {}).length > 0 && (
         <DashboardCard title="Error Analysis">

@@ -1,7 +1,19 @@
+export interface PurchaseMetrics {
+  purchasesByItem: {
+    [itemId: string]: {
+      count: number;
+      totalSpent: number;
+    };
+  };
+  totalPurchases: number;
+  totalRevenue: number;
+}
+
 export interface AnalyticsData {
   totalUsers: number;
   currentUsers: number;
   lastUpdated: number;
+  purchaseMetrics: PurchaseMetrics;
   stageMetrics: {
     anonymous: StageMetric;
     signedUp: StageMetric;
@@ -37,6 +49,12 @@ interface StageMetric {
   totalUsers: number;
   lastEntryDate: number;
   lastExitDate: number;
+  browsers?: {
+    [browser: string]: number;
+  };
+  platforms?: {
+    [platform: string]: number;
+  };
 }
 
 interface FunnelMetric {
@@ -109,6 +127,12 @@ interface ConvertedMetric {
         };
       };
     };
+    browsers?: {
+      [browser: string]: number;
+    };
+    platforms?: {
+      [platform: string]: number;
+    };
   };
   prePurchase?: {
     totalMessages: number;
@@ -132,6 +156,12 @@ interface ConvertedMetric {
           [errorDetail: string]: number;
         };
       };
+    };
+    browsers?: {
+      [browser: string]: number;
+    };
+    platforms?: {
+      [platform: string]: number;
     };
   };
 }
