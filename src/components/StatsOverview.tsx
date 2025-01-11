@@ -47,13 +47,13 @@ export const StatsOverview: React.FC<StatsOverviewProps> = ({ data }) => {
     },
     {
       title: 'Total Purchases',
-      value: (data.purchaseMetrics?.totalPurchases || 0).toLocaleString(),
+      value: (Object.values(data.purchaseMetrics?.purchasesByItem || {}).reduce((sum, item) => sum + item.count, 0)).toLocaleString(),
       icon: ShoppingCart,
       color: 'text-orange-600',
     },
     {
       title: 'Total Revenue',
-      value: `$${(data.purchaseMetrics?.totalRevenue || 0).toLocaleString(undefined, {
+      value: `$${(data.purchaseMetrics?.totalSpent || 0).toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       })}`,

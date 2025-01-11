@@ -5,8 +5,7 @@ export interface PurchaseMetrics {
       totalSpent: number;
     };
   };
-  totalPurchases: number;
-  totalRevenue: number;
+  totalSpent: number;
 }
 
 interface StagePlatformBrowserMetrics {

@@ -23,7 +23,7 @@ export const PurchaseMetrics: React.FC<PurchaseMetricsProps> = ({ metrics, class
                 <span className="text-gray-600">Total Purchases</span>
               </div>
               <span className="text-xl font-bold text-blue-600">
-                {metrics.totalPurchases.toLocaleString()}
+                {Object.values(metrics.purchasesByItem).reduce((sum, item) => sum + item.count, 0).toLocaleString()}
               </span>
             </div>
             <div className="flex items-center justify-between">
@@ -32,7 +32,7 @@ export const PurchaseMetrics: React.FC<PurchaseMetricsProps> = ({ metrics, class
                 <span className="text-gray-600">Total Revenue</span>
               </div>
               <span className="text-xl font-bold text-blue-600">
-                ${metrics.totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                ${metrics.totalSpent.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
             <div className="flex items-center justify-between">
@@ -41,7 +41,7 @@ export const PurchaseMetrics: React.FC<PurchaseMetricsProps> = ({ metrics, class
                 <span className="text-gray-600">Avg. Purchase</span>
               </div>
               <span className="text-xl font-bold text-blue-600">
-                ${(metrics.totalRevenue / metrics.totalPurchases).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                ${(metrics.totalSpent / Object.values(metrics.purchasesByItem).reduce((sum, item) => sum + item.count, 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
           </div>
@@ -88,7 +88,7 @@ export const PurchaseMetrics: React.FC<PurchaseMetricsProps> = ({ metrics, class
                 <span className="text-gray-600">Items/Purchase</span>
               </div>
               <span className="text-xl font-bold text-green-600">
-                {(Object.values(metrics.purchasesByItem).reduce((acc, curr) => acc + curr.count, 0) / metrics.totalPurchases).toFixed(2)}
+                {(Object.values(metrics.purchasesByItem).reduce((acc, curr) => acc + curr.count, 0) / Object.keys(metrics.purchasesByItem).length).toFixed(2)}
               </span>
             </div>
             <div className="flex items-center justify-between">
@@ -97,7 +97,7 @@ export const PurchaseMetrics: React.FC<PurchaseMetricsProps> = ({ metrics, class
                 <span className="text-gray-600">Avg. Item Price</span>
               </div>
               <span className="text-xl font-bold text-green-600">
-                ${(metrics.totalRevenue / Object.values(metrics.purchasesByItem).reduce((acc, curr) => acc + curr.count, 0)).toFixed(2)}
+                ${(metrics.totalSpent / Object.values(metrics.purchasesByItem).reduce((acc, curr) => acc + curr.count, 0)).toFixed(2)}
               </span>
             </div>
           </div>
