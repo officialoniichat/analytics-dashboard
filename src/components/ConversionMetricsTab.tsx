@@ -173,17 +173,17 @@ export const ConversionMetricsTab: React.FC<ConversionMetricsTabProps> = ({ data
         </div>
       </DashboardCard>
 
-      {(stage.browsers || stage.platforms) && (
+      {(stage.browser || stage.platform) && (
         <DashboardCard title="Platform Analytics">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {stage.browsers && (
+            {stage.browser && (
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center">
                   <Monitor className="w-5 h-5 text-blue-500 mr-2" />
                   Browser Distribution
                 </h3>
                 <div className="space-y-3">
-                  {Object.entries(stage.browsers)
+                  {Object.entries(stage.browser)
                     .sort(([, a], [, b]) => b - a)
                     .map(([browser, count]) => (
                       <div key={browser} className="flex items-center justify-between group hover:bg-gray-50 p-2 rounded-lg transition-colors">
@@ -203,14 +203,14 @@ export const ConversionMetricsTab: React.FC<ConversionMetricsTabProps> = ({ data
                 </div>
               </div>
             )}
-            {stage.platforms && (
+            {stage.platform && (
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-gray-900 flex items-center">
                   <Globe className="w-5 h-5 text-green-500 mr-2" />
                   Platform Distribution
                 </h3>
                 <div className="space-y-3">
-                  {Object.entries(stage.platforms)
+                  {Object.entries(stage.platform)
                     .sort(([, a], [, b]) => b - a)
                     .map(([platform, count]) => (
                       <div key={platform} className="flex items-center justify-between group hover:bg-gray-50 p-2 rounded-lg transition-colors">

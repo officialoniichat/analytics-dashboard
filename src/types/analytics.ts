@@ -9,11 +9,25 @@ export interface PurchaseMetrics {
   totalRevenue: number;
 }
 
+interface StagePlatformBrowserMetrics {
+  platform: {
+    [platform: string]: number;
+  };
+  browser: {
+    [browser: string]: number;
+  };
+}
+
 export interface AnalyticsData {
   totalUsers: number;
   currentUsers: number;
   lastUpdated: number;
   purchaseMetrics: PurchaseMetrics;
+  stagePlatformBrowser: {
+    anonymous: StagePlatformBrowserMetrics;
+    signedUp: StagePlatformBrowserMetrics;
+    purchased: StagePlatformBrowserMetrics;
+  };
   stageMetrics: {
     anonymous: StageMetric;
     signedUp: StageMetric;
@@ -49,12 +63,6 @@ interface StageMetric {
   totalUsers: number;
   lastEntryDate: number;
   lastExitDate: number;
-  browsers?: {
-    [browser: string]: number;
-  };
-  platforms?: {
-    [platform: string]: number;
-  };
 }
 
 interface FunnelMetric {

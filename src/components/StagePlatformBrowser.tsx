@@ -96,18 +96,18 @@ export const StagePlatformBrowser: React.FC<StagePlatformBrowserProps> = ({ data
   const stages = {
     anonymous: {
       title: 'Anonymous Users',
-      browsers: data.stageMetrics?.anonymous?.browsers || {},
-      platforms: data.stageMetrics?.anonymous?.platforms || {},
+      browsers: data.stagePlatformBrowser?.anonymous?.browser || {},
+      platforms: data.stagePlatformBrowser?.anonymous?.platform || {},
     },
     signedUp: {
       title: 'Signed Up Users',
-      browsers: data.stageMetrics?.signedUp?.browsers || {},
-      platforms: data.stageMetrics?.signedUp?.platforms || {},
+      browsers: data.stagePlatformBrowser?.signedUp?.browser || {},
+      platforms: data.stagePlatformBrowser?.signedUp?.platform || {},
     },
     purchased: {
       title: 'Purchased Users',
-      browsers: data.stageMetrics?.purchased?.browsers || {},
-      platforms: data.stageMetrics?.purchased?.platforms || {},
+      browsers: data.stagePlatformBrowser?.purchased?.browser || {},
+      platforms: data.stagePlatformBrowser?.purchased?.platform || {},
     },
   };
 
