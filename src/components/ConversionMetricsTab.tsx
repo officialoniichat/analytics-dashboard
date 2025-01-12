@@ -68,8 +68,16 @@ export const ConversionMetricsTab: React.FC<ConversionMetricsTabProps> = ({ data
   const avgMessagesPerUser = stage.totalMessages / stage.userCount;
   const conversionRate = (funnelMetrics.conversionCount / stageMetrics.totalUsers * 100).toFixed(1);
   const timeToConvert = type === 'anonymousToSignedUp' ? metrics?.preSignup?.timeToConvert : metrics?.prePurchase?.timeToConvert;
-  const avgTimeToConvert = ((timeToConvert || 0) / stage.userCount / (1000 * 60 * 60)).toFixed(1);
-
+  console.log(timeToConvert,  stage.userCount)
+  const avgTimeToConvertInMs = (timeToConvert || 0) / (stage.userCount || 1); // Avoid division by zero
+  const avgHours = Math.floor(avgTimeToConvertInMs / (1000 * 60 * 60));
+  const avgMinutes = Math.floor((avgTimeToConvertInMs % (1000 * 60 * 60)) / (1000 * 60));
+  const avgSeconds = Math.floor((avgTimeToConvertInMs % (1000 * 60)) / 1000);
+  
+  const formattedTime =
+  avgHours === 0 && avgMinutes === 0 && avgSeconds === 0
+    ? "<1s"
+    : `${avgHours}h ${avgMinutes}m ${avgSeconds}s`;
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -83,12 +91,15 @@ export const ConversionMetricsTab: React.FC<ConversionMetricsTabProps> = ({ data
               <span className="text-xl font-bold text-blue-600">{conversionRate}%</span>
             </div>
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <Clock className="w-5 h-5 text-blue-500 mr-2" />
-                <span className="text-gray-600">Avg Time to Convert</span>
-              </div>
-              <span className="text-xl font-bold text-blue-600">{avgTimeToConvert}h</span>
-            </div>
+  <div className="flex items-center">
+    <Clock className="w-5 h-5 text-blue-500 mr-2" />
+    <span className="text-gray-600">Avg Time to Convert</span>
+  </div>
+  <span className="text-xl font-bold text-blue-600">
+    {formattedTime}
+  </span>
+</div>
+
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <Users className="w-5 h-5 text-blue-500 mr-2" />
