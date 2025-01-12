@@ -8,6 +8,7 @@ import {
 import { EventMetrics } from './EventMetrics';
 import { PurchaseMetrics } from './PurchaseMetrics';
 import type { AnalyticsData } from '../types/analytics';
+import type { ConversionStageMetrics } from '../types/conversion';
 
 const formatBrowserName = (browser: string): string => {
   const browserNames: Record<string, string> = {
