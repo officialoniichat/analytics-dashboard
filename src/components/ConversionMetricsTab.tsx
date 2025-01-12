@@ -66,7 +66,8 @@ export const ConversionMetricsTab: React.FC<ConversionMetricsTabProps> = ({ data
 
   const avgMessagesPerUser = stage.totalMessages / stage.userCount;
   const conversionRate = (funnelMetrics.conversionCount / stageMetrics.totalUsers * 100).toFixed(1);
-  const avgTimeToConvert = ((funnelMetrics.totalConversionTime || 0) / (funnelMetrics.conversionsTracked || 1) / (1000 * 60 * 60)).toFixed(1);
+  const timeToConvert = type === 'anonymousToSignedUp' ? metrics?.preSignup?.timeToConvert : metrics?.prePurchase?.timeToConvert;
+  const avgTimeToConvert = ((timeToConvert || 0) / stage.userCount / (1000 * 60 * 60)).toFixed(1);
 
   return (
     <div className="space-y-6">
