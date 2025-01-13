@@ -11,15 +11,15 @@ export const UserFunnel: React.FC<UserFunnelProps> = ({ data }) => {
   const funnelData = [
     {
       stage: 'Anonymous',
-      users: data.stageMetrics?.anonymous?.currentUsers || 0,
+      users: data.stageMetrics?.anonymous?.totalUsers || 0,
     },
     {
       stage: 'Signed Up',
-      users: data.stageMetrics?.signedUp?.currentUsers || 0,
+      users: data.stageMetrics?.signedUp?.totalUsers || 0,
     },
     {
       stage: 'Purchased',
-      users: data.stageMetrics?.purchased?.currentUsers || 0,
+      users: data.stageMetrics?.purchased?.totalUsers || 0,
     },
   ];
 

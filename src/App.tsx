@@ -25,7 +25,7 @@ const TABS = [
 function App() {
   const [selectedTab, setSelectedTab] = useState<TabType>('dashboard');
   const [data, setData] = useState<AnalyticsData>(analyticsData);
-  const [useMockData, setUseMockData] = useState(true);
+  const [useMockData, setUseMockData] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
