@@ -13,7 +13,7 @@ interface EventMetricsProps {
 }
 
 export const EventMetrics: React.FC<EventMetricsProps> = ({ data, stage }) => {
-  const eventMetrics = data.eventMetrics?.[stage] || { characterEvents: {}, valueEvents: {} };
+  const eventMetrics = data.eventMetrics?.[stage] || data;
   const [expandedEvents, setExpandedEvents] = useState<string[]>([]);
   const [hiddenEvents, setHiddenEvents] = useState<string[]>([]);
   
